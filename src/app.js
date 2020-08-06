@@ -21,6 +21,24 @@ const {
   remainder,
 } = require('./lib/numbers');
 
+const {
+  negate,
+  both,
+  either,
+  none,
+  one,
+  truthiness,
+  isEqual,
+  isGreaterThan,
+  isLessThanOrEqualTo,
+  isOdd,
+  isEven,
+  isSquare,
+  startsWith,
+  containsVowels,
+  isLowerCase,
+} = require('./lib/booleans');
+
 const app = express();
 app.use(express.json());
 
@@ -105,6 +123,22 @@ app.post('/numbers/remainder', (req, res) => {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   }
   res.status(200).json({ result: remainder(a, b) });
+});
+
+// Booleans //
+app.post('/booleans/negate', (req, res) => {
+  res.status(200).json({ result: negate(req.body.value) });
+});
+
+app.post('/booleans/truthiness', (req, res) => {
+  res.status(200).json({ result: truthiness(req.body.value) });
+});
+
+app.get('/booleans/is-odd/:a', (req, res) => {
+  if (isNaN(req.params.a)) {
+    res.status(400).json({ error: 'Parameter must be a number.' });
+  }
+  res.status(200).json({ result: isOdd(req.params.a) });
 });
 
 module.exports = app;
